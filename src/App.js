@@ -3,6 +3,7 @@ import {IntegrationSelector} from "./components/IntegrationSelector/IntegrationS
 import {CircularProgress, Fade, Slide} from "@material-ui/core";
 import useData from "./hooks/useData";
 import makeStyles from "@material-ui/core/styles/makeStyles";
+import Filters from "./components/Filters/Filters";
 
 const useStyles = makeStyles(theme => ({
     App: {},
@@ -19,6 +20,8 @@ const useStyles = makeStyles(theme => ({
 function App() {
     const classes = useStyles();
     const [selectedProviders, setSelectedProviders] = useState({});
+    const [selectedJob, setSelectedJob] = useState('');
+    const [exp, setExp] = useState(0);
 
     const [data, loading] = useData(true, {
         url: "/data",
@@ -52,11 +55,19 @@ function App() {
         [data, loading, selectedProviders]
     );
 
+    const filters = useMemo(() => (
+        <Filters maxYears={9} exp={exp} onChangedExp={(exp) => {
+            console.log(exp);
+            setExp(exp)
+        }} onSelectJob={(job) => setSelectedJob(job)} selectedJob={selectedJob} jobs={data ? data.length > 0 ? Object.keys(data[0].data) : null : null}/>
+    ), [data, selectedJob, exp]);
+
     return (
         <div className={classes.App}>
             <div className={classes.IntegrationSelectorContainer}>
                 {loading ? loader : selector}
             </div>
+            {filters}
         </div>
     );
 }
