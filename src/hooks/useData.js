@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 export default function useData(
     shouldLoad,
     { url, options },
-    initialData = [],
+    initialData = []
 ) {
     const [data, setData] = useState(initialData);
     const [loading, setLoading] = useState(false);
@@ -13,16 +13,13 @@ export default function useData(
             try {
                 if (shouldLoad) setLoading(true);
 
-                
                 const res = await fetch(url, options);
-                if(res.ok) {
+                if (res.ok) {
                     const fetchedData = await res.json();
                     setData(fetchedData);
-                } 
-                setTimeout(() => {
-                    if (shouldLoad) setLoading(false);
-                }, 2000);
-                
+                }
+
+                if (shouldLoad) setLoading(false);
             } catch (error) {
                 throw error;
             }
@@ -32,4 +29,4 @@ export default function useData(
     }, []);
 
     return [data, loading];
-};
+}

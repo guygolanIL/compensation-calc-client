@@ -1,5 +1,4 @@
 import React from "react";
-import "./IntegrationSelector.css";
 import Checkbox from "@material-ui/core/Checkbox";
 import { makeStyles } from "@material-ui/core";
 

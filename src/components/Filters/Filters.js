@@ -1,4 +1,4 @@
-import React, {useMemo} from 'react';
+import React from "react";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
@@ -8,58 +8,60 @@ import Slider from "@material-ui/core/Slider";
 
 const useStyles = makeStyles(theme => ({
     formControl: {
-        margin: theme.spacing(1),
-        minWidth: 120,
+        margin: theme.spacing(2),
+        minWidth: 120
+    },
+    Filters: {
+        margin: "auto",
+        padding: "10px 20px",
+        textAlign: 'center',
+        display: "inline-block",
+        border: "solid 1px #b0abab",
+        boxShadow: "0px 0px 7px 3px #b0abab",
+        width: "73vw",
+        borderRadius: "10px"
     }
 }));
 
-const getMarks = (years) => {
-    const marks = [];
-    for (let i = 0 ; i < years; i++) {
-        marks.push({
-            value: i,
-            label: 'i Years'
-        })
-    }
-    return marks;
-};
-
-const Filters = ({jobs, onSelectJob, selectedJob, exp, onChangedExp, maxYears}) => {
+const Filters = ({
+    jobs,
+    onSelectJob,
+    selectedJob,
+    exp,
+    onChangedExp,
+    maxYears
+}) => {
     const classes = useStyles();
 
-    const marks = useMemo(() => getMarks(maxYears), [maxYears]);
-
     return (
-        <div>
-
+        <div className={classes.Filters}>
             <FormControl className={classes.formControl}>
-                <InputLabel id="demo-simple-select-label">Job</InputLabel>
+                <InputLabel id="jobSelectLabel">Job</InputLabel>
                 <Select
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
+                    labelId="jobSelectLabel"
+                    id="jobSelect"
                     value={selectedJob}
-                    onChange={(e) => onSelectJob(e.target.value)}
+                    onChange={e => onSelectJob(e.target.value)}
                 >
-                    {
-                        jobs ? jobs.map(job => (
-                            <MenuItem key={job} value={job}>{job}</MenuItem>
-                        )) : null
-                    }
-
+                    {jobs
+                        ? jobs.map(job => (
+                              <MenuItem key={job} value={job}>
+                                  {job}
+                              </MenuItem>
+                          ))
+                        : null}
                 </Select>
+            </FormControl>
+            <FormControl className={classes.formControl}>
+                <InputLabel id="expSliderLabel">Exp</InputLabel>
                 <Slider
-                    onChange={(e, value) => onChangedExp(value)}
+                    onChangeCommitted={(e, value) => onChangedExp(value)}
                     defaultValue={0}
-                    getAriaValueText={(value) => (value)}
                     aria-labelledby="discrete-slider"
                     valueLabelDisplay="auto"
-                    step={1}
-                    // marks={marks}
-                    min={0}
                     max={maxYears}
                 />
             </FormControl>
-
         </div>
     );
 };
