@@ -5,6 +5,7 @@ import InputLabel from "@material-ui/core/InputLabel";
 import Select from "@material-ui/core/Select";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import Slider from "@material-ui/core/Slider";
+import "./Filters.css";
 
 const useStyles = makeStyles(theme => ({
     formControl: {
@@ -18,8 +19,11 @@ const useStyles = makeStyles(theme => ({
         display: "inline-block",
         border: "solid 1px #b0abab",
         boxShadow: "0px 0px 7px 3px #b0abab",
-        width: "73vw",
-        borderRadius: "10px"
+        width: "35vw",
+        borderRadius: "10px",
+        [theme.breakpoints.down(700)]: {
+            width: '50vw'
+        }
     }
 }));
 
