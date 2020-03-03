@@ -6,7 +6,7 @@ export default function useData(
     initialData = []
 ) {
     const [data, setData] = useState(initialData);
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         async function getData() {
