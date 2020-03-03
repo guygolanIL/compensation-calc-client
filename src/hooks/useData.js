@@ -18,14 +18,17 @@ export default function useData(
                     const fetchedData = await res.json();
                     setData(fetchedData);
                 }
-
-                if (shouldLoad) setLoading(false);
             } catch (error) {
                 throw error;
             }
         }
 
-        getData();
+        getData()
+            .then(() => {
+                if(shouldLoad){
+                    setLoading(false);
+                }
+            });
     }, []);
 
     return [data, loading];

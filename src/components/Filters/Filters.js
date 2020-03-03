@@ -5,7 +5,6 @@ import InputLabel from "@material-ui/core/InputLabel";
 import Select from "@material-ui/core/Select";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import Slider from "@material-ui/core/Slider";
-import "./Filters.css";
 
 const useStyles = makeStyles(theme => ({
     formControl: {
