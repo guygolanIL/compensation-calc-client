@@ -14,14 +14,14 @@ const useStyles = makeStyles(theme => ({
     Filters: {
         margin: "auto",
         padding: "10px 20px",
-        textAlign: 'center',
+        textAlign: "center",
         display: "inline-block",
         border: "solid 1px #b0abab",
         boxShadow: "0px 0px 7px 3px #b0abab",
         width: "35vw",
         borderRadius: "10px",
         [theme.breakpoints.down(700)]: {
-            width: '50vw'
+            width: "50vw"
         }
     }
 }));

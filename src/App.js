@@ -4,6 +4,7 @@ import { CircularProgress, Fade, Slide } from "@material-ui/core";
 import useData from "./hooks/useData";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import Filters from "./components/Filters/Filters";
+import { CompensationResolver } from "./components/CompensationResolver/CompensationResolver";
 
 const useStyles = makeStyles(theme => ({
     App: {},
@@ -21,6 +22,10 @@ const useStyles = makeStyles(theme => ({
     FiltersContainer: {
         display: "flex",
         margin: "1rem 0 1rem 0"
+    },
+
+    CompensationResolverContainer: {
+        display: "flex"
     }
 }));
 
@@ -48,7 +53,7 @@ function App() {
 
     const selector = useMemo(
         () => (
-            <Slide timeout={1500} direction={"up"} in={!loading}>
+            <Slide timeout={2000} direction={"up"} in={!loading}>
                 <div
                     style={{
                         margin: "auto"
@@ -81,13 +86,11 @@ function App() {
                         margin: "auto"
                     }}
                 >
-                    <Fade timeout={5000} in={!loading}>
+                    <Fade timeout={4000} in={!loading}>
                         <div>
                             <Filters
                                 maxYears={9}
-                                exp={exp}
                                 onChangedExp={exp => {
-                                    console.log(exp);
                                     setExp(exp);
                                 }}
                                 onSelectJob={job => setSelectedJob(job)}
@@ -105,7 +108,31 @@ function App() {
                 </div>
             </Slide>
         ),
-        [data, selectedJob, exp, loading]
+        [data, selectedJob, loading]
+    );
+
+    const compensationResolver = useMemo(
+        () => (
+            <Slide timeout={3000} direction="up" in={!loading}>
+                <div
+                    style={{
+                        margin: "auto"
+                    }}
+                >
+                    <Fade timeout={4500} in={!loading}>
+                        <div>
+                            <CompensationResolver
+                                data={data}
+                                selectedProviders={selectedProviders}
+                                selectedJob={selectedJob}
+                                exp={exp}
+                            />
+                        </div>
+                    </Fade>
+                </div>
+            </Slide>
+        ),
+        [data, selectedJob, selectedProviders, exp, loading]
     );
 
     const getComponentsIfNotLoading = useCallback(() => {
@@ -119,6 +146,9 @@ function App() {
                         {selector}
                     </div>
                     <div className={classes.FiltersContainer}>{filters}</div>
+                    <div className={classes.CompensationResolverContainer}>
+                        {compensationResolver}
+                    </div>
                 </>
             );
         }
@@ -131,7 +161,9 @@ function App() {
         selector,
         classes.IntegrationSelectorContainer,
         filters,
-        classes.FiltersContainer
+        classes.FiltersContainer,
+        compensationResolver,
+        classes.CompensationResolverContainer
     ]);
 
     return <div className={classes.App}>{getComponentsIfNotLoading()}</div>;
